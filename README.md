@@ -1,6 +1,7 @@
 A function for repairing admixture of two cells in a single droplet during single cell sequencing, notably during Cell-Cell-seq. Corrects the diluted distribution for genes which can reasonably be assigned to one cell or the other.
 
-For more details on the application of this method and Cell-Cell-seq in general, please read more here: Systematic mapping of emergent transcriptional states in interacting single-cell dyads by Cell-Cell-seq, https://www.biorxiv.org/content/10.64898/2026.02.05.704136v1
+For more details on the application of this method and Cell-Cell-seq in general, please read more here: 
+Systematic mapping of emergent transcriptional states in interacting single-cell dyads by Cell-Cell-seq, https://www.biorxiv.org/content/10.64898/2026.02.05.704136v1
 
 # Dependencies:
 ccRepair is based on the Seurat pipeline in R. GGplot is used for some data visualization.
