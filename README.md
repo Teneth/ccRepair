@@ -5,7 +5,7 @@ For more details on the application of this method and Cell-Cell-seq in general,
 https://www.biorxiv.org/content/10.64898/2026.02.05.704136v1
 
 # Dependencies:
-ccRepair is based on the Seurat pipeline in R. GGplot is used for some data visualization.
+For ease of use, ccRepair uses the Seurat pipeline in R. GGplot is used for some data visualization.
 ```
 library(Seurat)
 library(ggplot2)
