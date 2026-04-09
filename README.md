@@ -13,23 +13,27 @@ Download the script and source it to your R environment, then provide your RDS a
 ```
 source("2026.04.09_ccRepair_function_v1.0_script.R")
 
-repaired.ratio.df<-Create_ccRepair_Data( Object_data= Object_data,
+your_rds <- readRDS("your_seurat_object.rds")
+sample_name_vector <- c("Tcell","CancerCell","Tcell","Mixed,"CancerCell"...)
+
+
+repaired.ratio.df<-Create_ccRepair_Data( Object_data= your_rds,
                                   ExpName="ExpName", ##Title for output files
-                                  working_directory="/u/project/kp1/jlangerm/Projects/Dicarlo_Nanovial/Analysis/", ###Place for output files
-                                  cell_discriminator = markers$Name, ## Vector containing cell labels that will distinguish SINGLET populations
-                                  cell_discriminator_pair = c("CD45NV-Tcell","NV-PC3"), ### Singlet Discriminator strings for TWO populations
-                                  fold_change_baseline = 1.5 , ### Fold change baseline for considering "gene allegiance". Raw FC. Too low and you will have bleed, too high and not many genes will be adjusted
-                                  coexpression_ceiling = 0.1 , ### A percent measure between 0 and 1, lower for less sample bleed, but may need to be adjusted if bleed is naturally high
+                                  working_directory="/u/project/Analysis/", ###Place for output files
+                                  cell_discriminator = sample_name_vector, ## Vector containing cell labels that will distinguish SINGLET populations
+                                  cell_discriminator_pair = c("Tcell","CancerCell"), ### Singlet Discriminator strings for TWO populations
+                                  fold_change_baseline = 1.5 , ### Fold change baseline for considering "gene allegiance". Raw FC. Too low and you will have cell cell bleed, too high and not many genes will be adjusted
+                                  coexpression_ceiling = 0.1 , ### A percent measure between 0 and 1, lower for less sample bleed, but may need to be adjusted if bleed is naturally high between similar cells
                                   expression_cutoff = 0.5,  ### Denoising cutoff, ask consistent genes to be above an average normalized count threshold
                                   consistency_function = "median", ### median, mean, or percent - function for the consistency cutoff. consistency is (gene$Mean+0.1) / (gene$Stdev +0.1). mean and median take upper bound over avg mean or median consistency
-                                  consistency_percent = NA ,## if using percent give a 0-1 value, will take top x % of consistent genes ordered by consistency measure
+                                  consistency_percent = NA ,## if using percent for function, provide a 0-1 value, will take top x % of consistent genes ordered by consistency measure
                                   dyads_specific_sample = T ,### if your experiment design has a sample where you know your dyads can only be there pick True and below options, F if you're not sure where they are
-                                  dyads_specific_discriminator = markers$Name, # or NA if dyads_specific_sample=F
-                                  dyads_specific_name = "NV-PC3-Tcell", ## or NA if dyads_specific_sample=F
-                                  dyad_identity_min1 = 0.05,
-                                  dyad_identity_min2 = 0.2,
-                                  consistency_gene_percent_threshold = 0.1 ,## Percent of consistent genes that must be expressed in a cell to reliably call it a dyad and adjust its expression, 0-1
-                                  write_output_data=T)
+                                  dyads_specific_discriminator = sample_name_vector, # or NA if dyads_specific_sample=F
+                                  dyads_specific_name = "Mixed", ## or NA if dyads_specific_sample=F
+                                  dyad_identity_min1 = 0.05, ## The floor so allowable identity gene expression in cell type 1, used to confirm a dyad prior to adjustment. You may need to run this once to determine the best level empirically
+                                  dyad_identity_min2 = 0.2, ## The floor so allowable identity gene expression in cell type 2, used to confirm a dyad prior to adjustment.
+                                  consistency_gene_percent_threshold = 0.1 ,## Percent of consistent genes that must be expressed in a cell to reliably call it a dyad and adjust its expression, a value from 0-1
+                                  write_output_data=T) ## This will write the ccRepair cell x gene matrix dataframe, the cell metadata with ccRepair consistency gene data, and a list of the top consistent allegiance genes used
 ```
 
 
