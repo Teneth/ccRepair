@@ -60,6 +60,7 @@ plot1<-ggplot(cell.design)+
   geom_point(aes(X,Y, color=sample_name_vector))+
   theme_classic()
 ```
+(https://github.com/Teneth/ccRepair/blob/main/ccrepair_result.png)
 
 # How It Works
 
