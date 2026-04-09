@@ -30,12 +30,36 @@ repaired.ratio.df<-Create_ccRepair_Data( Object_data= your_rds,
                                   dyads_specific_sample = T ,### if your experiment design has a sample where you know your dyads can only be there pick True and below options, F if you're not sure where they are
                                   dyads_specific_discriminator = sample_name_vector, # or NA if dyads_specific_sample=F
                                   dyads_specific_name = "Mixed", ## or NA if dyads_specific_sample=F
-                                  dyad_identity_min1 = 0.05, ## The floor so allowable identity gene expression in cell type 1, used to confirm a dyad prior to adjustment. You may need to run this once to determine the best level empirically
-                                  dyad_identity_min2 = 0.2, ## The floor so allowable identity gene expression in cell type 2, used to confirm a dyad prior to adjustment.
+                                  dyad_identity_min1 = 0.05, ## Minimum allowable identity gene expression ratio for cell type 1, used to confirm a dyad prior to adjustment. You may need to run this once to determine the best level empirically
+                                  dyad_identity_min2 = 0.2, ## Minimum allowable identity gene expression ratio for cell type 2, used to confirm a dyad prior to adjustment. 
                                   consistency_gene_percent_threshold = 0.1 ,## Percent of consistent genes that must be expressed in a cell to reliably call it a dyad and adjust its expression, a value from 0-1
                                   write_output_data=T) ## This will write the ccRepair cell x gene matrix dataframe, the cell metadata with ccRepair consistency gene data, and a list of the top consistent allegiance genes used
 ```
 
+# Follow up
+Take the ccRepair dataframe and rerun analysis on it, the Dyad gene expression will be much stronger, allowing differentiation expression, gene correlation, and even projection tools to separate the Cell-cell effects much easier.
+```
+
+test_obj <- CreateSeuratObject(counts = repaired.ratio.df, project = "ccRepaired_data")
+test_obj@assays$RNA$data <- test_obj@assays$RNA$counts
+test_obj = FindVariableFeatures(test_obj, verbose = F)
+all.genes <- rownames(test_obj)
+test_obj <- ScaleData(test_obj,  vars.to.regress = c("nFeature_RNA"))
+test_obj <- RunPCA(test_obj, features = VariableFeatures(test_obj))
+test_obj <- FindNeighbors(test_obj, dims = 1:20)
+test_obj <- FindClusters(test_obj, resolution = 0.5)
+test_obj = RunUMAP(test_obj, dims = 1:20, verbose = T)
+
+
+cell.design <- test_obj@meta.data
+umap.meta <- as.data.frame(test_obj@reductions$umap@cell.embeddings)
+names(umap.meta)<- c("X","Y")
+cell.design <- cbind(cell.design, umap.meta)
+
+plot1<-ggplot(cell.design)+
+  geom_point(aes(X,Y, color=sample_name_vector))+
+  theme_classic()
+```
 
 # How It Works
 
