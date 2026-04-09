@@ -39,7 +39,7 @@ repaired.ratio.df <- Create_ccRepair_Data( Object_data= your_rds,
 ```
 The most important parameters are the discriminator parameters, which tell the function which cells to take for singlets and which cells to take for dyad, assuming that is know. Sequencing a cell cell seq experiment alone as a single sample is one way to have a priori knowledge of dyads. If it is not known, ccRepair will attempt to guess which dyads are present based on mixing of identity genes from the whole cell population. 
 The default parameters represent a good specific baseline, but for your data they may require empirical determination; check the GeneMeans scatter plot to confirm cell-type specific expression of the labelled consistency genes, and that they are enough of them per side of the comparison.
-
+![Scatter of differential genes with consistent genes labeled](ccRepair.Side1_vs_Side2.ThresholdCon.GeneMeans.scatter.png)
 
 
 # Follow up
