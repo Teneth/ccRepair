@@ -42,7 +42,7 @@ The most important parameters are the discriminator parameters, which tell the f
 The default parameters represent a good specific baseline, but for your data they may require empirical determination; check the GeneMeans scatter plot to confirm cell-type specific expression of the labelled consistency genes, and that they are enough of them per side of the comparison.
 ![Scatter of differential genes with consistent genes labeled](ccRepair.Side1_vs_Side2.ThresholdCon.GeneMeans.scatter.png)
 
-The function will also report of the cell identity ratio found in likely dyads, which you can use to adjust the dyad_identity_min1 and 2 parameters. dyad_identity_min1 of 0.05 requires at least 5% of cell type 1 expression in a type1/type2 ratio comparison. These are used to filter non-dyads, but do not affect the ccRepair operation on genes.
+The function will also report the cell identity ratio found in likely dyads, which you can use to adjust the dyad_identity_min1 and 2 parameters. dyad_identity_min1 of 0.05 requires at least 5% of cell type 1 expression in a type1/type2 ratio comparison. These are used to filter non-dyads, but do not affect the ccRepair operation on genes.
 
 # Follow up
 Take the ccRepair dataframe and rerun analyses on it. The Dyad gene expression will be much stronger, allowing differentiation expression, gene correlation, and even projection tools to separate the Cell-cell effects much easier.
