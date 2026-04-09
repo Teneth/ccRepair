@@ -19,7 +19,7 @@ your_rds <- readRDS("your_seurat_object.rds")
 sample_name_vector <- c("Tcell","CancerCell","Tcell","Mixed,"CancerCell"...)
 
 
-repaired.ratio.df<-Create_ccRepair_Data( Object_data= your_rds,
+repaired.ratio.df <- Create_ccRepair_Data( Object_data= your_rds,
                                   ExpName="ExpName", ##Title for output files
                                   working_directory="/u/project/Analysis/", ###Place for output files
                                   cell_discriminator = sample_name_vector, ## Vector containing cell labels that will distinguish SINGLET populations
