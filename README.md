@@ -38,9 +38,11 @@ repaired.ratio.df <- Create_ccRepair_Data( Object_data= your_rds,
                                   write_output_data=T) ## This will write the ccRepair cell x gene matrix dataframe, the cell metadata with ccRepair consistency gene data, and a list of the top consistent allegiance genes used
 ```
 The most important parameters are the discriminator parameters, which tell the function which cells to take for singlets and which cells to take for dyad, assuming that is know. Sequencing a cell cell seq experiment alone as a single sample is one way to have a priori knowledge of dyads. If it is not known, ccRepair will attempt to guess which dyads are present based on mixing of identity genes from the whole cell population. 
+
 The default parameters represent a good specific baseline, but for your data they may require empirical determination; check the GeneMeans scatter plot to confirm cell-type specific expression of the labelled consistency genes, and that they are enough of them per side of the comparison.
 ![Scatter of differential genes with consistent genes labeled](ccRepair.Side1_vs_Side2.ThresholdCon.GeneMeans.scatter.png)
 
+The function will also report of the cell identity ratio found in likely dyads, which you can use to adjust the dyad_identity_min1 and 2 parameters. dyad_identity_min1 of 0.05 requires at least 5% of cell type 1 expression in a type1/type2 ratio comparison. These are used to filter non-dyads, but do not affect the ccRepair operation on genes.
 
 # Follow up
 Take the ccRepair dataframe and rerun analysis on it, the Dyad gene expression will be much stronger, allowing differentiation expression, gene correlation, and even projection tools to separate the Cell-cell effects much easier.
